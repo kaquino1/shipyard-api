@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+    <!-- Google Fonts -->
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap' rel='stylesheet'> 
+
+    <!-- Font Awesome -->
+    <script src='https://kit.fontawesome.com/d083987fa3.js' crossorigin='anonymous'></script>
+
+    <!-- CSS only -->
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p' crossorigin='anonymous'></script>
+
+    <link rel='stylesheet' href='styles.css'>
+    <script src='scripts.js'></script> 
+    
+    <title>Shipyard API Documentation</title>
+</head>
+<body>
+    
+    <div id='mySidebar' class='sidebar bg-white d-flex flex-column'>
+        <div class='text-center'>
+            <a href='#openbtn' id='sidebarTitle' class='my-1'>Shipyard API</a></li>
+        </div>
+        <hr />
+        <ul class='list-unstyled ps-0 mb-auto'>
+            <li class='mb-1'>
+                <button class='btn btn-toggle align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#boats-collapse' aria-expanded='false'>
+                    <span class='mx-1'>Boats</span>
+                </button>
+                <div class='collapse' id='boats-collapse'>
+                    <ul class='btn-toggle-nav list-unstyled fw-normal pb-1'>
+                    <li><a href='#postBoatsHead' class='link-dark my-1'>Create a Boat</a></li>
+                    <li><a href='#getAllBoatsHead' class='link-dark my-1'>View All Boats</a></li>
+                    <li><a href='#getOneBoatHead' class='link-dark my-1'>View a Boat</a></li>
+                    <li><a href='#deleteOneBoatHead' class='link-dark my-1'>Delete a Boat</a></li>
+                    <li><a href='#putOneBoatHead' class='link-dark my-1'>Edit a Boat - PUT</a></li>
+                    <li><a href='#patchOneBoatHead' class='link-dark my-1'>Edit a Boat - PATCH</a></li>
+                    <li><a href='#addCargoBoatHead' class='link-dark my-1'>Add Cargo to Boat</a></li>
+                    <li><a href='#removeCargoBoatHead' class='link-dark my-1'>Remove Cargo from Boat</a></li>
+                    <li><a href='#dockBoatSlipHead' class='link-dark my-1'>Dock Boat at Slip</a></li>
+                    <li><a href='#undockBoatSlipHead' class='link-dark my-1'>Undock Boat from Slip</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class='mb-1'>
+                <button class='btn btn-toggle align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#cargo-collapse' aria-expanded='false'>
+                    <span class='mx-1'>Cargo</span>
+                </button>
+                <div class='collapse' id='cargo-collapse'>
+                    <ul class='btn-toggle-nav list-unstyled fw-normal pb-1'>
+                        <li><a href='#postCargoHead' class='link-dark my-1'>Create a Cargo Load</a></li>
+                        <li><a href='#getAllCargoHead' class='link-dark my-1'>View All Cargo Loads</a></li>
+                        <li><a href='#getOneCargoHead' class='link-dark my-1'>View a Cargo Load</a></li>
+                        <li><a href='#deleteOneCargoHead' class='link-dark my-1'>Delete a Cargo Load</a></li>
+                        <li><a href='#putOneCargoHead' class='link-dark my-1'>Edit a Cargo Load - PUT</a></li>
+                        <li><a href='#patchOneCargoHead' class='link-dark my-1'>Edit a Cargo Load - PATCH</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class='mb-1'>
+                <button class='btn btn-toggle align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#slips-collapse' aria-expanded='false'>
+                    <span class='mx-1'>Slips</span>
+                </button>
+                <div class='collapse' id='slips-collapse'>
+                    <ul class='btn-toggle-nav list-unstyled fw-normal pb-1'>
+                        <li><a href='#postSlipsHead' class='link-dark my-1'>Create a Slip</a></li>
+                        <li><a href='#getAllSlipsHead' class='link-dark my-1'>View All Slips</a></li>
+                        <li><a href='#getOneSlipHead' class='link-dark my-1'>View a Slip</a></li>
+                        <li><a href='#deleteOneSlipHead' class='link-dark my-1'>Delete a Slip</a></li>
+                        <li><a href='#putOneSlipHead' class='link-dark my-1'>Edit a Slip - PUT</a></li>
+                        <li><a href='#patchOneSlipHead' class='link-dark my-1'>Edit a Slip - PATCH</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <hr />
+        <div class='text-center'>
+            <a href='https://github.com/kaquino1' id='github' class='my-1'><i class="fab fa-github"></i> kaquino1</a></li>
+        </div>
+    </div>
+      
+    <div id='main' class=''>
+        <button id='openbtn' class='openbtn btn btn-dark rounded' onclick='toggleSidebar()'>
+            <span class='mx-1'>Shipyard API Documentation</span>
+        </button>
+        <div class='content mb-3 mx-3'>
+            <div class='mb-3'>
+                <a class='fs-4 api-url' href='https://shipyard-rest-api.uk.r.appspot.com'>https://shipyard-rest-api.uk.r.appspot.com</a>
+            </div>
+
+            <!-- BOATS -->
+            <h3 class='fw-thin text-white'>Boats</h3>
+            
+            <div class='card p-3 mb-3'>
+                <button id='postBoatsHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#postBoats' aria-expanded='true' aria-controls='postBoats'>
+                    <span class='mx-2'>Create a Boat</span>
+                </button>
+                <div class='px-3 collapse show' id='postBoats'>
+                    <hr />
+                    <code class='endpoint'>POST /boats</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>None</dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>The name of the boat.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+                                    <td>The boat's type. E.g. Sailboat, Yacht, etc.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                                <tr>
+                                    <td>length</td>
+                                    <td>The length of the boat in feet.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                            </table> 
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='postBoatsRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>201 Created</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>
+                                            The boat is not created if the request is missing any required attributes.<br />
+                                            It is assumed that if the request contains any of the listed attributes, then the value of the attribute is valid.<br />
+                                            It is assumed that the request will not contain any extraneous attributes.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='postBoatsResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='getAllBoatsHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#getAllBoats' aria-expanded='true' aria-controls='getAllBoats'>
+                    <span class='mx-2'>View All Boats</span>
+                </button>
+                <div class='px-3 collapse show' id='getAllBoats'>
+                    <hr />
+                    <code class='endpoint'>GET /boats</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>None</dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='getAllBoatsResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='getOneBoatHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#getOneBoat' aria-expanded='true' aria-controls='getOneBoat'>
+                    <span class='mx-2'>View a Boat</span>
+                </button>
+                <div class='px-3 collapse show' id='getOneBoat'>
+                    <hr />
+                    <code class='endpoint'>GET /boats/:boat_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The boat is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='getOneBoatResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='deleteOneBoatHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#deleteOneBoat' aria-expanded='true' aria-controls='deleteOneBoat'>
+                    <span class='mx-2'>Delete a Boat</span>
+                </button>
+                <div class='px-3 collapse show' id='deleteOneBoat'>
+                    <hr />
+                    <code class='endpoint'>DELETE /boats/:boat_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>Authorization: Bearer TOKEN</dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body:</dt>
+                            <dd>None</dd>
+                        <dt>Response Body Format:</dt>
+                            <dd>
+                                <div>Success: None</div>
+                                <div>Failure: JSON</div>
+                            </dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>204 No Content</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The boat is owned by another user or it does not exist.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='putOneBoatHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#putOneBoat' aria-expanded='true' aria-controls='putOneBoat'>
+                    <span class='mx-2'>Edit a Boat - PUT</span>
+                </button>
+                <div class='px-3 collapse show' id='putOneBoat'>
+                    <hr />
+                    <code class='endpoint'>PUT /boats/:boat_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>The name of the boat.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+                                    <td>The boat's type. E.g. Sailboat, Yacht, etc.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                                <tr>
+                                    <td>length</td>
+                                    <td>The length of the boat in feet.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                            </table> 
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='putOneBoatRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>The request object is missing at least one of the required attributes.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The boat is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='putOneBoatResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='patchOneBoatHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#patchOneBoat' aria-expanded='true' aria-controls='patchOneBoat'>
+                    <span class='mx-2'>Edit a Boat - PATCH</span>
+                </button>
+                <div class='px-3 collapse show' id='patchOneBoat'>
+                    <hr />
+                    <code class='endpoint'>PATCH /boats/:boat_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>The name of the boat.</td>
+                                    <td>No.</td>
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+                                    <td>The boat's type. E.g. Sailboat, Yacht, etc.</td>
+                                    <td>No.</td>
+                                </tr>
+                                <tr>
+                                    <td>length</td>
+                                    <td>The length of the boat in feet.</td>
+                                    <td>No.</td>
+                                </tr>
+                            </table> 
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='patchOneBoatRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>The request object is empty.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The boat is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='patchOneBoatResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='addCargoBoatHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#addCargoBoat' aria-expanded='true' aria-controls='addCargoBoat'>
+                    <span class='mx-2'>Add Cargo to Boat</span>
+                </button>
+                <div class='px-3 collapse show' id='addCargoBoat'>
+                    <hr />
+                    <code class='endpoint'>PATCH /boats/:boat_id/cargo/:cargo_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cargo_id</td>
+                                        <td>The id of the cargo load.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body:</dt>
+                            <dd>None</dd>
+                        <dt>Response Body Format:</dt>
+                            <dd>
+                                <div>Success: None</div>
+                                <div>Failure: JSON</div>
+                            </dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>204 No Content</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The cargo is already assigned to a boat. OR<br />The boat and/or cargo is owned by another user or does not exist.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='removeCargoBoatHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#removeCargoBoat' aria-expanded='true' aria-controls='removeCargoBoat'>
+                    <span class='mx-2'>Remove Cargo from Boat</span>
+                </button>
+                <div class='px-3 collapse show' id='removeCargoBoat'>
+                    <hr />
+                    <code class='endpoint'>DELETE /boats/:boat_id/cargo/:cargo_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cargo_id</td>
+                                        <td>The id of the cargo load.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body:</dt>
+                            <dd>None</dd>
+                        <dt>Response Body Format:</dt>
+                            <dd>
+                                <div>Success: None</div>
+                                <div>Failure: JSON</div>
+                            </dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>204 No Content</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The specified cargo is not assigned to the specified boat. OR<br />The boat and/or cargo is owned by another user or does not exist.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='dockBoatSlipHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#dockBoatSlip' aria-expanded='true' aria-controls='dockBoatSlip'>
+                    <span class='mx-2'>Dock Boat at Slip</span>
+                </button>
+                <div class='px-3 collapse show' id='dockBoatSlip'>
+                    <hr />
+                    <code class='endpoint'>PATCH /boats/:boat_id/slips/:slip_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>slip_id</td>
+                                        <td>The id of the slip.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body:</dt>
+                            <dd>None</dd>
+                        <dt>Response Body Format:</dt>
+                            <dd>
+                                <div>Success: None</div>
+                                <div>Failure: JSON</div>
+                            </dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>204 No Content</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The slip is already occcupied. OR<br />The boat is already docked. OR<br />The boat is larger than the slip. OR<br />The boat is owned by another user or the boat and/or slip does not exist.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='undockBoatSlipHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#undockBoatSlip' aria-expanded='true' aria-controls='undockBoatSlip'>
+                    <span class='mx-2'>Undock Boat from Slip</span>
+                </button>
+                <div class='px-3 collapse show' id='undockBoatSlip'>
+                    <hr />
+                    <code class='endpoint'>DELETE /boats/:boat_id/slips/:slip_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>slip_id</td>
+                                        <td>The id of the slip.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body:</dt>
+                            <dd>None</dd>
+                        <dt>Response Body Format:</dt>
+                            <dd>
+                                <div>Success: None</div>
+                                <div>Failure: JSON</div>
+                            </dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>204 No Content</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The specified boat is not docked at the specified slip. OR<br />The boat is owned by another user or the boat and/or slip does not exist.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- CARGO LOADS-->
+            <h3 class='fw-thin text-white'>Cargo Loads</h3>
+
+            <div class='card p-3 mb-3'>
+                <button id='postCargoHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#postCargo' aria-expanded='true' aria-controls='postCargo'>
+                    <span class='mx-2'>Create a Cargo Load</span>
+                </button>
+                <div class='px-3 collapse show' id='postCargo'>
+                    <hr />
+                    <code class='endpoint'>POST /cargo</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>None</dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>content</td>
+                                    <td>The cargo's content.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                                <tr>
+                                    <td>volume</td>
+                                    <td>The volume of the cargo in cubic feet.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                            </table> 
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='postCargoRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>201 Created</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>
+                                            The cargo load is not created if the request is missing any required attributes.<br />
+                                            It is assumed that if the request contains any of the listed attributes, then the value of the attribute is valid.<br />
+                                            It is assumed that the request will not contain any extraneous attributes.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='postCargoResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='getAllCargoHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#getAllCargo' aria-expanded='true' aria-controls='getAllCargo'>
+                    <span class='mx-2'>View All Cargo Loads</span>
+                </button>
+                <div class='px-3 collapse show' id='getAllCargo'>
+                    <hr />
+                    <code class='endpoint'>GET /cargo</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>None</dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='getAllCargoResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='getOneCargoHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#getOneCargo' aria-expanded='true' aria-controls='getOneCargo'>
+                    <span class='mx-2'>View a Cargo Load</span>
+                </button>
+                <div class='px-3 collapse show' id='getOneCargo'>
+                    <hr />
+                    <code class='endpoint'>GET /cargo/:cargo_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>cargo_id</td>
+                                        <td>The id of the cargo load.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The cargo load is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='getOneCargoResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='deleteOneCargoHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#deleteOneCargo' aria-expanded='true' aria-controls='deleteOneCargo'>
+                    <span class='mx-2'>Delete a Cargo Load</span>
+                </button>
+                <div class='px-3 collapse show' id='deleteOneCargo'>
+                    <hr />
+                    <code class='endpoint'>DELETE /cargo/:cargo_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>cargo_id</td>
+                                        <td>The id of the cargo load.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>Authorization: Bearer TOKEN</dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body:</dt>
+                            <dd>None</dd>
+                        <dt>Response Body Format:</dt>
+                            <dd>
+                                <div>Success: None</div>
+                                <div>Failure: JSON</div>
+                            </dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>204 No Content</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The cargo load is owned by another user or it does not exist.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='putOneCargoHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#putOneCargo' aria-expanded='true' aria-controls='putOneCargo'>
+                    <span class='mx-2'>Edit a Cargo Load - PUT</span>
+                </button>
+                <div class='px-3 collapse show' id='putOneCargo'>
+                    <hr />
+                    <code class='endpoint'>PUT /cargo/:cargo_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>cargo_id</td>
+                                        <td>The id of the cargo load.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>content</td>
+                                    <td>The cargo's content.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                                <tr>
+                                    <td>volume</td>
+                                    <td>The volume of the cargo in cubic feet.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                            </table> 
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='putOneCargoRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>The request object is missing at least one of the required attributes.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The cargo load is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='putOneCargoResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='patchOneCargoHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#patchOneCargo' aria-expanded='true' aria-controls='patchOneCargo'>
+                    <span class='mx-2'>Edit a Cargo Load - PATCH</span>
+                </button>
+                <div class='px-3 collapse show' id='patchOneCargo'>
+                    <hr />
+                    <code class='endpoint'>PATCH /cargo/:cargo_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>boat_id</td>
+                                        <td>The id of the boat.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>
+                                <div>Authorization: Bearer TOKEN</div>
+                                <div>Accepts: application/json</div>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>content</td>
+                                    <td>The cargo's content.</td>
+                                    <td>No.</td>
+                                </tr>
+                                <tr>
+                                    <td>volume</td>
+                                    <td>The volume of the cargo in cubic feet.</td>
+                                    <td>No.</td>
+                                </tr>
+                            </table>  
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='patchOneCargoRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>The request object is empty.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The boat is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='patchOneCargoResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- SLIPS -->
+            <h3 class='fw-thin text-white'>Slips</h3>
+
+            <div class='card p-3 mb-3'>
+                <button id='postSlipsHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#postSlips' aria-expanded='true' aria-controls='postSlips'>
+                    <span class='mx-2'>Create a Slip</span>
+                </button>
+                <div class='px-3 collapse show' id='postSlips'>
+                    <hr />
+                    <code class='endpoint'>POST /slips</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>None</dd>
+                        <dt>Request Headers:</dt>
+                            <dd>Accepts: application/json</dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>label</td>
+                                    <td>The slip's idenifying label.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                                <tr>
+                                    <td>length</td>
+                                    <td>The length of the slip in feet.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                            </table> 
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='postSlipsRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>201 Created</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>
+                                            The slip is not created if the request is missing any required attributes.<br />
+                                            It is assumed that if the request contains any of the listed attributes, then the value of the attribute is valid.<br />
+                                            It is assumed that the request will not contain any extraneous attributes.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='postSlipsResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='getAllSlipsHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#getAllSlips' aria-expanded='true' aria-controls='getAllSlips'>
+                    <span class='mx-2'>View All Slips</span>
+                </button>
+                <div class='px-3 collapse show' id='getAllSlips'>
+                    <hr />
+                    <code class='endpoint'>GET /slips</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>None</dd>
+                        <dt>Request Headers:</dt>
+                            <dd>Accepts: application/json</dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='getAllSlipsResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='getOneSlipHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#getOneSlip' aria-expanded='true' aria-controls='getOneSlip'>
+                    <span class='mx-2'>View a Slip</span>
+                </button>
+                <div class='px-3 collapse show' id='getOneSlip'>
+                    <hr />
+                    <code class='endpoint'>GET /slips/:slip_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>slip_id</td>
+                                        <td>The id of the slip.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>Accepts: application/json</dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The slip is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='getOneSlipResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='deleteOneSlipHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#deleteOneSlip' aria-expanded='true' aria-controls='deleteOneSlip'>
+                    <span class='mx-2'>Delete a Slip</span>
+                </button>
+                <div class='px-3 collapse show' id='deleteOneSlip'>
+                    <hr />
+                    <code class='endpoint'>DELETE /slips/:slip_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>slip_id</td>
+                                        <td>The id of the slip.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Body:</dt>
+                            <dd>None</dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body:</dt>
+                            <dd>None</dd>
+                        <dt>Response Body Format:</dt>
+                            <dd>
+                                <div>Success: None</div>
+                                <div>Failure: JSON</div>
+                            </dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>204 No Content</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The slip is owned by another user or it does not exist.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='putOneSlipHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#putOneSlip' aria-expanded='true' aria-controls='putOneSlip'>
+                    <span class='mx-2'>Edit a Slip - PUT</span>
+                </button>
+                <div class='px-3 collapse show' id='putOneSlip'>
+                    <hr />
+                    <code class='endpoint'>PUT /slips/:slip_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>slip_id</td>
+                                        <td>The id of the slip.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>Accepts: application/json</dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>label</td>
+                                    <td>The slip's idenifying label.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                                <tr>
+                                    <td>length</td>
+                                    <td>The length of the slip in feet.</td>
+                                    <td>Yes.</td>
+                                </tr>
+                            </table> 
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='putOneSlipRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>The request object is missing at least one of the required attributes.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The slip is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='putOneSlipResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class='card p-3 mb-3'>
+                <button id='patchOneSlipHead' class='btn endpoint-btn' type='button' data-bs-toggle='collapse' data-bs-target='#patchOneSlip' aria-expanded='true' aria-controls='patchOneSlip'>
+                    <span class='mx-2'>Edit a Slip - PATCH</span>
+                </button>
+                <div class='px-3 collapse show' id='patchOneSlip'>
+                    <hr />
+                    <code class='endpoint'>PATCH /slips/:slip_id</code>
+                    <p class='fw-bold fs-5 my-1'>Request:</p>
+                    <dl class='list-unstyled mb-1'>
+                        <dt>Path Parameters:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>slip_id</td>
+                                        <td>The id of the slip.</td>
+                                    </tr>
+                                </table>
+                            </dd>
+                        <dt>Request Headers:</dt>
+                            <dd>Accepts: application/json</dd>
+                        <dt>Request Body:</dt>
+                            <dd>Required</dd>
+                        <dt>Request Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Request JSON Attributes:</dt>
+                        <dd>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Required?</th>
+                                </tr>
+                                <tr>
+                                    <td>label</td>
+                                    <td>The slip's idenifying label.</td>
+                                    <td>No.</td>
+                                </tr>
+                                <tr>
+                                    <td>length</td>
+                                    <td>The length of the slip in feet.</td>
+                                    <td>No.</td>
+                                </tr>
+                            </table> 
+                       </dd>
+                        <dt>Request Body Example:</dt>
+                        <dd>
+                            <pre><code id='patchOneSlipRequest'></code></pre>
+                       </dd>
+                    </dl>
+
+                    <p class='fw-bold fs-5 mb-1'>Response:</p>
+                    <dl class='list-unstyled mb-0'>
+                        <dt>Response Body Format:</dt>
+                            <dd>JSON</dd>
+                        <dt>Response Statuses:</dt>
+                            <dd>
+                                <table>
+                                    <tr>
+                                        <th>Outcome</th>
+                                        <th>Status Code</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sucess</td>
+                                        <td>200 OK</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>400 Bad Request</td>
+                                        <td>The request object is empty.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>401 Unauthorized</td>
+                                        <td>The JWT is invalid or missing.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>403 Forbidden</td>
+                                        <td>The slip is owned by another user or it does not exist.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failure</td>
+                                        <td>406 Not Acceptable</td>
+                                        <td>The server only returns application/json data.</td>
+                                    </tr>
+                                </table> 
+                           </dd>
+                        <dt>Response Example:</dt>
+                            <dd>
+                                <pre><code id='patchOneSlipResponse'></code></pre>
+                           </dd>
+                    </dl>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>
