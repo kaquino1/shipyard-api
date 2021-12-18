@@ -9,9 +9,9 @@ const BOAT = 'Boat';
 
 // START MODEL FUNCTIONS
 
-const postSlip = async (number, length) => {
+const postSlip = async (label, length) => {
     const slipKey = datastore.key(SLIP);
-    const newSlip = { 'number': number, 'length': length, 'boat': null };
+    const newSlip = { 'label': label, 'length': length, 'boat': null };
     await datastore.save({ 'key': slipKey, 'data': newSlip });
     const slip = await datastore.get(slipKey);
     return slip.map(ds.fromDatastore);
@@ -63,7 +63,7 @@ const getOneSlip = async (req) => {
 
 const putSlip = async (req) => {
     const slipID = parseInt(req.params.slipID);
-    const { number, length } = req.body;
+    const { label, length } = req.body;
 
     const slipKey = datastore.key([SLIP, slipID]);
     const slip = await datastore.get(slipKey);
@@ -71,7 +71,7 @@ const putSlip = async (req) => {
         return Promise.resolve('empty');
     }
     else {
-        const newSlip = { 'number': number, 'length': length, 'boat': slip[0].boat };
+        const newSlip = { 'label': label, 'length': length, 'boat': slip[0].boat };
         await datastore.update({ 'key': slipKey, 'data': newSlip });
         const updatedSlip = await datastore.get(slipKey);
 
@@ -91,7 +91,7 @@ const patchSlip = async (req) => {
     }
     else {
         const newSlip = { ...req.body };
-        if (!newSlip.number) { newSlip.number = slip[0].number };
+        if (!newSlip.label) { newSlip.label = slip[0].label };
         if (!newSlip.length) { newSlip.length = slip[0].length };
         newSlip.boat = slip[0].boat;
         await datastore.update({ 'key': slipKey, 'data': newSlip });
@@ -132,12 +132,12 @@ router.post('/', async (req, res) => {
         res.status(406).json({ 'Error': 'server only returns application/json data' });
         return
     }
-    if (req.body.number === undefined || req.body.length === undefined) {
+    if (req.body.label === undefined || req.body.length === undefined) {
         res.status(400).json({ 'Error': 'request object missing at least one required attribute' });
         return;
     }
     else {
-        const slip = await postSlip(req.body.number, req.body.length);
+        const slip = await postSlip(req.body.label, req.body.length);
         slip[0].self = `${req.protocol}://${req.get('Host')}/slips/${slip[0].id}`;
         res.status(201).json(slip[0]);
     }
@@ -176,7 +176,7 @@ router.put('/:slipID', async (req, res) => {
         res.status(406).json({ 'Error': 'server only returns application/json data' });
         return
     }
-    if (req.body.number === undefined || req.body.length === undefined) {
+    if (req.body.label === undefined || req.body.length === undefined) {
         res.status(400).json({ 'Error': 'request object is missing at least one of the required attributes' });
         return;
     }
@@ -198,7 +198,7 @@ router.patch('/:slipID', async (req, res) => {
         res.status(406).json({ 'Error': 'server only returns application/json data' });
         return
     }
-    if (req.body.number === undefined && req.body.length === undefined) {
+    if (req.body.label === undefined && req.body.length === undefined) {
         res.status(400).json({ 'Error': 'request object is empty' });
         return;
     }

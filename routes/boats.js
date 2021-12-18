@@ -57,7 +57,7 @@ const expandSlip = async (boatObj, req) => {
     if (boatObj.slip === null) { return boatObj }
     const slipKey = datastore.key([SLIP, boatObj.slip]);
     const slip = await datastore.get(slipKey);
-    boatObj.slip = { 'id': boatObj.slip, 'number': slip[0].number, 'self': `${req.protocol}://${req.get('Host')}/slips/${boatObj.slip}`}
+    boatObj.slip = { 'id': boatObj.slip, 'label': slip[0].label, 'self': `${req.protocol}://${req.get('Host')}/slips/${boatObj.slip}`}
     return boatObj
 }
 
