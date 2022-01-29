@@ -1,6 +1,6 @@
 {
   "homepage": "http://kaquino1.github.io/shipyard-res-api",
-  "name": "doc",
+  "name": "shipyard-api-documentation",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
