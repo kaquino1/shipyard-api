@@ -52,8 +52,13 @@ const APIRequestForm = ({ onResponse }) => {
         }
       }
       if (value) {
-        if (['login', 'callback', 'userinfo'].some(el => value.toLowerCase().includes(el))) {
+        if (
+          key === 'data-url' &&
+          ['login', 'callback', 'userinfo'].some(el => value.toLocaleLowerCase().includes(el))
+        ) {
           formEntries[key] = '/error';
+        } else if (key === 'data-token') {
+          formEntries[key] = value;
         } else {
           formEntries[key] = value.toLowerCase();
         }
