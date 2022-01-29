@@ -1,45 +1,48 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const { engine } = require('express-handlebars');
 const session = require('express-session');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 
 const strategy = new Auth0Strategy(
-    {
-        domain: process.env.AUTH0_DOMAIN,
-        clientID: process.env.AUTH0_CLIENT_ID,
-        clientSecret: process.env.AUTH0_CLIENT_SECRET,
-        callbackURL: `${process.env.APP_URL}/callback`
-    }, (accessToken, refreshToken, extraParams, profile, done) => {
-        var info = {
-            'email': profile.displayName,
-            'user_id': profile.user_id,
-            'jwt': extraParams.id_token
-        };
-        return done(null, info);
-    }
+  {
+    domain: process.env.AUTH0_DOMAIN,
+    clientID: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    callbackURL: `${process.env.APP_URL}/callback`
+  },
+  (accessToken, refreshToken, extraParams, profile, done) => {
+    var info = {
+      email: profile.displayName,
+      user_id: profile.user_id,
+      jwt: extraParams.id_token
+    };
+    return done(null, info);
+  }
 );
 
 passport.use(strategy);
 passport.serializeUser((user, done) => {
-    done(null, user);
+  done(null, user);
 });
 passport.deserializeUser((user, done) => {
-    done(null, user);
+  done(null, user);
 });
 
 const app = express();
+app.use(cors());
 
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }));
 app.set('view engine', 'hbs');
 app.set('trust proxy', true);
 
 const sess = {
-    secret: 'superSecret',
-    cookie: {},
-    resave: false,
-    saveUninitialized: true
+  secret: 'superSecret',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true
 };
 app.use(session(sess));
 
@@ -57,13 +60,17 @@ app.use('/slips', require('./routes/slips'));
 app.use('/boats', require('./routes/boats'));
 
 app.get('/', (req, res) => {
-    res.render('index')
-})
+  res.render('index');
+});
+
+app.all('/*', (req, res) => {
+  res.status(404).json({ Error: 'Not Found' });
+});
 
 // START SERVER
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}...`);
+  console.log(`Server listening on port ${PORT}...`);
 });
 
 module.exports = app;
