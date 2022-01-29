@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/shipyard-rest-api/static/css/main.25381bee.chunk.css",
-    "main.js": "/shipyard-rest-api/static/js/main.2b15f5c4.chunk.js",
-    "main.js.map": "/shipyard-rest-api/static/js/main.2b15f5c4.chunk.js.map",
+    "main.js": "/shipyard-rest-api/static/js/main.95dc9a76.chunk.js",
+    "main.js.map": "/shipyard-rest-api/static/js/main.95dc9a76.chunk.js.map",
     "runtime-main.js": "/shipyard-rest-api/static/js/runtime-main.78482ad7.js",
     "runtime-main.js.map": "/shipyard-rest-api/static/js/runtime-main.78482ad7.js.map",
     "static/css/2.0a9ec390.chunk.css": "/shipyard-rest-api/static/css/2.0a9ec390.chunk.css",
@@ -18,6 +18,6 @@
     "static/css/2.0a9ec390.chunk.css",
     "static/js/2.0e120d2e.chunk.js",
     "static/css/main.25381bee.chunk.css",
-    "static/js/main.2b15f5c4.chunk.js"
+    "static/js/main.95dc9a76.chunk.js"
   ]
 }
