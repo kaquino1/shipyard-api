@@ -13,9 +13,9 @@ const APIResponse = ({ response }) => {
             {response.status}
           </span>
         </div>
-        {response.customData && (
+        {response.meta && (
           <div className='me-3'>
-            Time: <span id='data-time'>{response.customData.time}</span>ms
+            Time: <span id='data-time'>{response.meta.time}</span>ms
           </div>
         )}
         <div className='me-3'>

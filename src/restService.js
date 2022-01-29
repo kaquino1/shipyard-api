@@ -1,14 +1,15 @@
 import axios from 'axios';
 
 const updateEndTime = response => {
-  response.customData = response.customData || {};
-  response.customData.time = new Date().getTime() - response.config.customData.startTime;
+  response.meta = response.meta || {};
+  response.meta.time = new Date().getTime() - response.config.meta.startTime;
   return response;
 };
 
 axios.interceptors.request.use(request => {
-  request.customData = request.customData || {};
-  request.customData.startTime = new Date().getTime();
+  console.log(request);
+  request.meta = request.meta || {};
+  request.meta.startTime = new Date().getTime();
   return request;
 });
 
