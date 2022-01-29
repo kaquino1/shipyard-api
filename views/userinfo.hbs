@@ -1,8 +1,16 @@
-<div class='alert-info text-center p-5'>
-    <h1 class='mb-5'> User Info </h1>
-    <h4>Email: {{email}}</h4>
-    <h4>User ID: {{user_id}}</h4>
-    <h3 class='mt-5'>JWT:</h3>
+<div class='d-flex p-5 vh-100'>
+  <div class='inner'>
+    <h1 class='title mb-5'> User Info </h1>
+    <h4><span class='title'>Email: </span>{{email}}</h4>
+    <h4><span class='title'>User ID: </span>{{user_id}}</h4>
+    <h3 class='title mt-5'>JWT:</h3>
     <div class='token text-start text-break'>{{jwt}}</div>
-    <a href={{link}} class='btn btn-secondary mt-5'> Logout </a>
+    <div>
+      <a href={{link}} class='btn btn-secondary mt-5'> Logout </a>
+    </div>
+    <div>
+      <a href='https://kaquino1.github.io/shipyard-rest-api/' class='btn btn-secondary mt-5'> API Documentation </a>
+    </div>
+  </div>
+
 </div>

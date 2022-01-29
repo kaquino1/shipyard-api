@@ -1,8 +1,22 @@
 body {
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  background-color: #6fd1d4;
 }
 
 .token {
-    margin: 20px;
-    font-family: 'Menlo', 'Courier New', monospace;
+  margin: 20px;
+  font-family: 'Menlo', 'Courier New', monospace;
+}
+
+.inner {
+  margin: auto;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 3.5rem;
+  background-color: #e9ecef;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.title {
+  color: #d4716e;
 }
