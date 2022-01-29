@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/shipyard-rest-api/static/css/main.25381bee.chunk.css",
+    "main.js": "/shipyard-rest-api/static/js/main.2b15f5c4.chunk.js",
+    "main.js.map": "/shipyard-rest-api/static/js/main.2b15f5c4.chunk.js.map",
+    "runtime-main.js": "/shipyard-rest-api/static/js/runtime-main.78482ad7.js",
+    "runtime-main.js.map": "/shipyard-rest-api/static/js/runtime-main.78482ad7.js.map",
+    "static/css/2.0a9ec390.chunk.css": "/shipyard-rest-api/static/css/2.0a9ec390.chunk.css",
+    "static/js/2.0e120d2e.chunk.js": "/shipyard-rest-api/static/js/2.0e120d2e.chunk.js",
+    "static/js/2.0e120d2e.chunk.js.map": "/shipyard-rest-api/static/js/2.0e120d2e.chunk.js.map",
+    "index.html": "/shipyard-rest-api/index.html",
+    "static/css/2.0a9ec390.chunk.css.map": "/shipyard-rest-api/static/css/2.0a9ec390.chunk.css.map",
+    "static/css/main.25381bee.chunk.css.map": "/shipyard-rest-api/static/css/main.25381bee.chunk.css.map",
+    "static/js/2.0e120d2e.chunk.js.LICENSE.txt": "/shipyard-rest-api/static/js/2.0e120d2e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.78482ad7.js",
+    "static/css/2.0a9ec390.chunk.css",
+    "static/js/2.0e120d2e.chunk.js",
+    "static/css/main.25381bee.chunk.css",
+    "static/js/main.2b15f5c4.chunk.js"
+  ]
+}
