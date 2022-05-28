@@ -297,7 +297,9 @@ router.patch('/:slipID', async (req, res) => {
     res.status(400).json({ Error: 'one or more request object attributes are the wrong type' });
     return;
   }
-  req.body.label = req.body.label.toUpperCase().trim();
+  if (req.body.label) {
+    req.body.label = req.body.label.toUpperCase().trim()
+  }
   if (!attrParams(req.body)) {
     res.status(400).json({
       Error: 'slip length is not positive and/or slip label contains forbidden characters'
