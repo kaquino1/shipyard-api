@@ -243,7 +243,7 @@ router.post('/', async (req, res) => {
     return;
   } else {
     req.body.content = req.body.content.trim();
-    const cargo = await postCargo(req.body);
+    const cargo = await postCargo(req);
     res.status(201).json(cargo[0]);
   }
 });
